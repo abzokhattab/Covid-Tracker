@@ -1,58 +1,43 @@
 import { Request, Response } from "express";
-import { getUserInfo } from "../helpers/getUserInfo";
-import Temperature from "../models/Temperature";
-import { User } from "../types/User";
+import { TemperatureService } from "../services/TemperatureService";
 
-export default class TemperatureController {
-  public static async logTemperature(req: any, res: Response) {
+export class TemperatureController {
+  private temperatureService: TemperatureService;
+
+  constructor() {
+    this.temperatureService = new TemperatureService();
+  }
+
+  public logTemperature = async (req: any, res: Response) => {
     try {
       const { temperature, location } = req.body;
-      const longitude = location?.coordinates[0];
-      const latitude = location?.coordinates[1];
+      const { coordinates } = location || {};
+      const [longitude, latitude] = coordinates || [];
       const token = req?.auth?.token;
-      const user: User = await getUserInfo(token);
-      const { name, email, sub } = user;
-      //removing old temperature
-      await Temperature.deleteMany({ "user.id": sub });
-      const newTemperature = new Temperature({
+      const result = await this.temperatureService.logTemperature(
         temperature,
-        location: {
-          type: "Point",
-          coordinates: [Number(longitude), Number(latitude)],
-        },
-        user: {
-          name,
-          email,
-          id: sub,
-        },
-        date: new Date(),
-      });
-      res.send(await newTemperature.save());
-    } catch (err: any) {
-      res.status(400).send({ message: err.message });
+        longitude,
+        latitude,
+        token
+      );
+      res.send(result);
+    } catch (error: any) {
+      res.status(400).send({ message: error.message });
     }
-  }
+  };
 
-  public static async getTemperatures(req: Request, res: Response) {
+  public getTemperatures = async (req: Request, res: Response) => {
     try {
-      const { latitude, longitude, radius } = req.query;
-      const temperatures = await Temperature.aggregate([
-        {
-          $geoNear: {
-            near: {
-              type: "Point",
-              coordinates: [Number(longitude), Number(latitude)],
-            },
-            maxDistance: Number(radius) * 1000,
-            spherical: true,
-            distanceField: "distance",
-          },
-        },
-      ]);
+      const { latitude, longitude, radius } = req.query as any;
+      const temperatures = await this.temperatureService.getTemperatures(
+        latitude,
+        longitude,
+        radius
+      );
       res.send(temperatures);
-    } catch (err: any) {
-      console.log(err);
-      res.status(400).send({ message: err.message });
+    } catch (error: any) {
+      console.log(error);
+      res.status(400).send({ message: error.message });
     }
-  }
+  };
 }
