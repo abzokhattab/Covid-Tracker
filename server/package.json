@@ -2,9 +2,12 @@
   "name": "covid-tracker",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.ts",
   "scripts": {
-    "start": "npx ts-node  src/app.ts",
+    "start": "nodemon src/app.ts",
+    "build": "rimraf dist && tsc",
+    "ts.check": "tsc --project tsconfig.json",
+    "add-build": "git add dist",
     "dev": "npx ts-node src/app.ts --transpile-only -W  ",
     "test": "jest"
   },
@@ -27,8 +30,10 @@
     "jwks-rsa": "^3.0.1",
     "mongoose": "^6.10.0",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.20",
+    "nodemon": "^2.0.21",
+    "pre-commit": "^1.2.2",
     "request": "^2.88.2",
+    "rimraf": "^4.4.0",
     "supertest": "^6.3.3"
   },
   "devDependencies": {
@@ -48,5 +53,9 @@
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.5"
-  }
+  },"pre-commit": [
+      "ts.check",
+      "build",
+      "add-build"
+  ]
 }
