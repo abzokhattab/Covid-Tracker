@@ -14,11 +14,7 @@ app.use(cors());
 
 // req.isAuthenticated is provided from the auth router
 app.get("/", (req: any, res) => {
-  res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
-});
-
-app.get("/profile", (req: any, res) => {
-  res.send(JSON.stringify(req?.oidc?.user));
+  res.send("hello");
 });
 
 app.use("/api", router);
