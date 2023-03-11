@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { Navbar, Nav, Button, Modal, Form } from 'react-bootstrap';
 
+import UserProfile from './UserProfile';
+
 function NavBar() {
   const [showModal, setShowModal] = useState(false);
   const [temperature, setTemperature] = useState("");
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
@@ -14,6 +17,9 @@ function NavBar() {
     console.log(`Temperature submitted: ${temperature}`);
     handleCloseModal();
   }
+  const handlePofileToggle = () => {
+    setIsProfileOpen(!isProfileOpen);
+  };
 
   return (
     <>
@@ -24,10 +30,11 @@ function NavBar() {
           <Nav className="mr-auto" />
           <Nav>
             <Button variant="success" className="create-btn" onClick={handleShowModal}>Create</Button>
-            <FaUser className="profile-icon" />
+            <FaUser className="profile-icon" onClick={ handlePofileToggle}/>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+      {isProfileOpen && <UserProfile onClose={handlePofileToggle} />}
 
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>

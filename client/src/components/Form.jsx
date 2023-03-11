@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../Form.css'; // Import CSS file for styling
-import { logTemperature } from '../Requests/LogTemperature';
+import { logTemperature } from '../Requests/logTemperature';
 import { useAuth0 } from '@auth0/auth0-react';
 
 function Form() {
@@ -24,33 +24,27 @@ function Form() {
 
     // Fetch user's location from the browser
     navigator.geolocation.getCurrentPosition(async(position) => {
-      const token = await getAccessTokenSilently({authorizationParams:{
-        audience: 'covido-tracker',
-        scope: 'read:users update:users',
-      }});
+      const token = await getAccessTokenSilently();
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
       console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-     // const token = await getAccessTokenSilently();
       await logTemperature({
         temperature,
         location: { coordinates:[longitude,latitude] },
       }, token
 
       )
-      // TODO: Submit form data to server or perform other actions
     });
   }
 
   return (
-    <div className="App">
+    <div >
       <nav>
         <ul>
           <li><button id="open-form-button" onClick={handleFormOpen}>Open Form</button></li>
         </ul>
       </nav>
 
-      {/* Side form */}
       {isFormOpen && (
         <div className="side-form-container">
           <div className="side-form">

@@ -1,10 +1,11 @@
 import axios from "axios";
+
 const { REACT_APP_SERVER_URL } = process.env;
 
-export async function logTemperature(data, token) {
+export async function updateUser(data, token) {
   let config = {
-    method: "post",
-    url: `${REACT_APP_SERVER_URL}/api/temperatures`,
+    method: "patch",
+    url: `${REACT_APP_SERVER_URL}/api/users`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

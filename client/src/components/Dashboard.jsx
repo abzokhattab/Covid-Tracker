@@ -1,85 +1,35 @@
-// import React, { useEffect, useState } from "react";
-// import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-// import axios from "axios";
-
-// function Dashboard() {
-//   const [patients, setPatients] = useState([]);
-//   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
-//   const [temperatures, setTemperatures] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   useEffect(() => {
-//     // axios
-//     //   .get("/api/patients")
-//     //   .then((response) => {
-//     //     setPatients(response.data);
-//     //   })
-//     //   .catch((error) => {
-//     //     console.log(error);
-//     //   });
-//   }, []);
-
-//   return (
-//     <MapContainer center={[51.505, -0.09]} zoom={1} scrollWheelZoom={false}>
-//       <TileLayer
-//         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-//         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-//       />
-//       {patients.map((patient) => (
-//         <Marker position={[patient.latitude, patient.longitude]}>
-//           <Popup>
-//             <div>
-//               <h2>{patient.name}</h2>
-//               <p>Temperature: {patient.temperature}</p>
-//               <p>Location: {patient.location}</p>
-//             </div>
-//           </Popup>
-//         </Marker>
-//       ))}
-//     </MapContainer>
-//   );
-// }
-
-// export default Dashboard;
-
-
 import React, { useState, useEffect } from "react";
-import { Route  } from 'react-router-dom';
 import { useAuth0,  } from "@auth0/auth0-react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import axios from "axios";
+import { getTemperature } from "../Requests/getTemperature";
 
 function Dashboard() {
-  const { isAuthenticated ,loginWithRedirect,isLoading  ,getAccessTokenSilently} = useAuth0();
+  const { isAuthenticated ,loginWithRedirect,isLoading  } = useAuth0();
   const [temperatures, setTemperatures] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchTemperatures = async () => {
-      try {
-  //      const token = await getAccessTokenSilently();
-   //   const token = localStorage.getItem('access_token');
-        const response = await axios.get("http://localhost:3002/api/temperatures?latitude=11&longitude=11&radius=10000",
-        //  {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-      //  }
+      
+        navigator.geolocation.getCurrentPosition(async(position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          const temps= await  getTemperature(latitude,longitude)
+          setTemperatures(temps);
+          setLoading(false);
+  
+        });
+
         
-        );
-        console.log(response)
-        setTemperatures(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-      }
+      
     };
 
     fetchTemperatures();
   }, []);
 
   useEffect(() => {
-    console.log("haha,",isAuthenticated,isLoading)
-	if( !isAuthenticated && !isLoading )   {return loginWithRedirect({
+
+    if( !isAuthenticated && !isLoading )   {return loginWithRedirect({
     appState: {
       returnTo: window.location.pathname,
     }
@@ -109,7 +59,7 @@ function Dashboard() {
                   Temperature: <strong>{temperature.temperature}</strong>
                 </p>
                 <p>
-                  Date: <strong>{new Date(temperature.createdAt).toString()}</strong>
+                  Date: <strong>{new Date(temperature.date).toString()}</strong>
                 </p>
               </div>
             </Popup> 

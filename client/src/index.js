@@ -4,18 +4,14 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Auth0ProviderWithHistory from "./auth/auth0-provider-with-history";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
 ReactDOM.render(
   <Router>
     <Auth0ProviderWithHistory>
       <App />
     </Auth0ProviderWithHistory>
   </Router>,
-  // <React.StrictMode>
-  //   <App />
-  // </React.StrictMode>
   document.getElementById("root")
 );
 

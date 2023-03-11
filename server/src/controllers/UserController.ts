@@ -10,7 +10,7 @@ export class UserController {
     this.userService = new UserService();
   }
 
-  public async editName(req: any, res: Response) {
+  public editName = async (req: any, res: Response) => {
     try {
       const update = req.body as Partial<User>;
       const userId = req?.auth?.payload?.sub;
@@ -22,9 +22,10 @@ export class UserController {
 
       res.send(result);
     } catch (err: any) {
+      console.error(err);
       res.status(400).send({ message: err.message });
     }
-  }
+  };
 
   private parseUpdateInput(input: any) {
     let output = {} as any;
