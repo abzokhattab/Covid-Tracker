@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Form, Button, Modal } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import { updateUser } from '../Requests/updateUser';
 import { toast, ToastContainer } from 'react-toastify';
