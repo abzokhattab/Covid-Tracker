@@ -2,9 +2,9 @@
   "name": "covid-tracker",
   "version": "1.0.0",
   "description": "",
-  "main": "app.ts",
-  "scripts": {
-    "start": "node dist/app.js",
+  "main": "index.ts",
+  "scripts": { 
+    "start": "node dist/index.js",
     "build": "rimraf dist && tsc",
     "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add dist",
