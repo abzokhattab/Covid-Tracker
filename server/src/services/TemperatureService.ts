@@ -13,14 +13,13 @@ export class TemperatureService {
 
   public async logTemperature(
     temperature: number,
-    longitude: number | undefined,
-    latitude: number | undefined,
-
-    token: string
+    longitude: number,
+    latitude: number,
+    userId: string
   ) {
-    const user: User = await this.userService.getUserInfo(token);
-    const { name, email, sub } = user;
-    await this.temperatureModel.deleteMany({ "user.id": sub });
+    const user: User = await this.userService.getUserInfo(userId);
+    const { name, email, user_id } = user;
+    await this.temperatureModel.deleteMany({ "user.id": user_id });
     const newTemperature = new this.temperatureModel({
       temperature,
       location: {
@@ -30,7 +29,7 @@ export class TemperatureService {
       user: {
         name,
         email,
-        id: sub,
+        id: user_id,
       },
       date: new Date(),
     });

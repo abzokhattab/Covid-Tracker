@@ -7,7 +7,9 @@ const router = express.Router();
 
 const temperatureController = new TemperatureController();
 const userController = new UserController();
-router.patch("/users", jwtCheck, userController.editName);
+
+router.patch("/users", jwtCheck, userController.updateUser);
+router.get("/users", jwtCheck, userController.getUser);
 router.post("/temperatures", jwtCheck, temperatureController.logTemperature);
 router.get("/temperatures", temperatureController.getTemperatures);
 

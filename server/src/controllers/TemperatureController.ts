@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { TemperatureService } from "../services/TemperatureService";
+import { IRequest } from "../types/IRequest";
 
 export class TemperatureController {
   private temperatureService: TemperatureService;
@@ -8,20 +9,21 @@ export class TemperatureController {
     this.temperatureService = new TemperatureService();
   }
 
-  public logTemperature = async (req: any, res: Response) => {
+  public logTemperature = async (req: IRequest, res: Response) => {
     try {
       const { temperature, location } = req.body;
       const { coordinates } = location || {};
-      const [longitude, latitude] = coordinates || [];
-      const token = req?.auth?.token;
+      const [latitude, longitude] = coordinates || [];
+      const userId = req?.auth?.payload?.sub;
       const result = await this.temperatureService.logTemperature(
         temperature,
         longitude,
         latitude,
-        token
+        userId
       );
       res.send(result);
     } catch (error: any) {
+      console.error(error);
       res.status(400).send({ message: error.message });
     }
   };

@@ -8,4 +8,5 @@ export interface User {
   email: string;
   updated_at: string;
   email_verified: boolean;
+  user_id: string;
 }

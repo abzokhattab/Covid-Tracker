@@ -1,10 +1,25 @@
-.create-btn {
-    margin-right: 10px;
+.navbar {
+  background-color: #75e294; /* set the background color /
+  font-family: Arial, sans-serif; / set the font /
+  padding: 10px; / add padding around the navbar */
+  }
+  
+  .logo {
+  width: 30px; /* set the logo size /
+  height: 30px;
+  margin-right: 10px; / add margin between logo and brand text */
+  }
+  
+  .brand-text {
+  font-size: 1.5rem; /* set the brand text size /
+  font-weight: bold; / set the font weight */
+  }
+  
+  .create-btn {
+  margin-right: 10px; /* add margin between Create button and user profile icon */
   }
   
   .profile-icon {
-    font-size: 24px;
-    color: #4CAF50;
-    cursor: pointer;
+  font-size: 1.5rem; /* set the user profile icon size /
+  cursor: pointer; / add a pointer cursor on hover */
   }
-  

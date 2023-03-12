@@ -23,7 +23,7 @@ const Auth0ProviderWithHistory = ({ children }) => {
       authorizationParams={{
         redirect_uri: `${window.location.origin}/callback`,
         audience: REACT_APP_AUTH0_AUDIENCE,
-        scope: "openid profile email read:users update:users",
+        scope: "profile email",
       }}
       useRefreshTokens={true}
       cacheLocation={"localstorage"}

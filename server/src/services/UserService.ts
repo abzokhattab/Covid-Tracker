@@ -22,18 +22,13 @@ export class UserService {
     this.audience = MANAGEMENT_API_AUDIENCE;
   }
 
-  async getUserInfo(token: string) {
-    const url = `https://${process.env.AUTH0_DOMAIN}/userinfo`;
-
-    let config = {
-      method: "get",
-      url,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  async getUserInfo(userId: string) {
+    const url = `https://${this.domain}/api/v2/users/${userId}`;
+    const headers = {
+      Authorization: `Bearer ${await this.getManagementApiToken()}`,
+      "Content-Type": "application/json",
     };
-
-    const response = await axios(config);
+    const response = await axios.get(url, { headers });
     return response.data;
   }
 

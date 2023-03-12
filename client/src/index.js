@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import Auth0ProviderWithHistory from "./auth/auth0-provider-with-history";
+import Auth0ProviderWithHistory from "./auth/auth0-provider.js";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 ReactDOM.render(
