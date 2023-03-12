@@ -6,7 +6,11 @@ export interface ITemperature extends Document {
     type: "Point";
     coordinates: [number, number];
   };
-  user: string;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+  };
   date: Date;
 }
 
