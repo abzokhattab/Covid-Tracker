@@ -65,8 +65,8 @@ const Form = ({onClose}) => {
           </div>
         </div>
       )}
-      <ToastContainer />
-    </>
+    <ToastContainer className="toast-container"/>   
+     </>
   );
 };
 

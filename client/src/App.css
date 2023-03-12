@@ -31,3 +31,10 @@
   color: #4CAF50;
   cursor: pointer;
 }
+
+.toast-container {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  right: 0;
+}

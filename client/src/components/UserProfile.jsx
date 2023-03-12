@@ -61,7 +61,7 @@ const UserProfile = ({ onClose }) => {
 
   return (showModal &&
     <Container className="side-form-container">
-      <ToastContainer />
+      <ToastContainer className="toast-container"/>   
       <Row className="side-form">
         <Col>
        {user.email !== "" && <img class="circular--square" src={user.picture ? user.picture:DEFAULT_IMAGE_URL} alt={user.name} /> 
