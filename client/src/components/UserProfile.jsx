@@ -6,6 +6,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getUser } from '../Requests/getUser';
 import "../Profile.css"
+
 const DEFAULT_IMAGE_URL = 'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg'; // Add your default image URL here
 
 const UserProfile = ({ onClose }) => {

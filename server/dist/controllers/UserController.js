@@ -17,13 +17,25 @@ const Temperature_1 = __importDefault(require("../models/Temperature"));
 const UserService_1 = require("../services/UserService");
 class UserController {
     constructor() {
-        this.editName = (req, res) => __awaiter(this, void 0, void 0, function* () {
+        this.updateUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
             try {
                 const update = req.body;
                 const userId = (_b = (_a = req === null || req === void 0 ? void 0 : req.auth) === null || _a === void 0 ? void 0 : _a.payload) === null || _b === void 0 ? void 0 : _b.sub;
                 let result = yield this.userService.updateUserInfo(userId, update);
                 yield Temperature_1.default.updateMany({ "user.id": userId }, { $set: this.parseUpdateInput(update) });
+                res.send(result);
+            }
+            catch (err) {
+                console.error(err);
+                res.status(400).send({ message: err.message });
+            }
+        });
+        this.getUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            var _c, _d;
+            try {
+                const userId = (_d = (_c = req === null || req === void 0 ? void 0 : req.auth) === null || _c === void 0 ? void 0 : _c.payload) === null || _d === void 0 ? void 0 : _d.sub;
+                let result = yield this.userService.getUserInfo(userId);
                 res.send(result);
             }
             catch (err) {

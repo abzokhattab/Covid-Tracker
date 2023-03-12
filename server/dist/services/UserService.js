@@ -19,17 +19,14 @@ class UserService {
         this.secret = MANAGEMENT_API_SECRET;
         this.audience = MANAGEMENT_API_AUDIENCE;
     }
-    getUserInfo(token) {
+    getUserInfo(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const url = `https://${process.env.AUTH0_DOMAIN}/userinfo`;
-            let config = {
-                method: "get",
-                url,
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+            const url = `https://${this.domain}/api/v2/users/${userId}`;
+            const headers = {
+                Authorization: `Bearer ${yield this.getManagementApiToken()}`,
+                "Content-Type": "application/json",
             };
-            const response = yield axios(config);
+            const response = yield axios.get(url, { headers });
             return response.data;
         });
     }

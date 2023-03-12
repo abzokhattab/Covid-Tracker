@@ -14,16 +14,17 @@ const TemperatureService_1 = require("../services/TemperatureService");
 class TemperatureController {
     constructor() {
         this.logTemperature = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            var _a;
+            var _a, _b;
             try {
                 const { temperature, location } = req.body;
                 const { coordinates } = location || {};
-                const [longitude, latitude] = coordinates || [];
-                const token = (_a = req === null || req === void 0 ? void 0 : req.auth) === null || _a === void 0 ? void 0 : _a.token;
-                const result = yield this.temperatureService.logTemperature(temperature, longitude, latitude, token);
+                const [latitude, longitude] = coordinates || [];
+                const userId = (_b = (_a = req === null || req === void 0 ? void 0 : req.auth) === null || _a === void 0 ? void 0 : _a.payload) === null || _b === void 0 ? void 0 : _b.sub;
+                const result = yield this.temperatureService.logTemperature(temperature, longitude, latitude, userId);
                 res.send(result);
             }
             catch (error) {
+                console.error(error);
                 res.status(400).send({ message: error.message });
             }
         });

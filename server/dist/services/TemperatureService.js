@@ -20,11 +20,11 @@ class TemperatureService {
         this.temperatureModel = Temperature_1.default;
         this.userService = new UserService_1.UserService();
     }
-    logTemperature(temperature, longitude, latitude, token) {
+    logTemperature(temperature, longitude, latitude, userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = yield this.userService.getUserInfo(token);
-            const { name, email, sub } = user;
-            yield this.temperatureModel.deleteMany({ "user.id": sub });
+            const user = yield this.userService.getUserInfo(userId);
+            const { name, email, user_id } = user;
+            yield this.temperatureModel.deleteMany({ "user.id": user_id });
             const newTemperature = new this.temperatureModel({
                 temperature,
                 location: {
@@ -34,7 +34,7 @@ class TemperatureService {
                 user: {
                     name,
                     email,
-                    id: sub,
+                    id: user_id,
                 },
                 date: new Date(),
             });

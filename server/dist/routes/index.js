@@ -10,7 +10,8 @@ const auth_1 = require("../middlewares/auth");
 const router = express_1.default.Router();
 const temperatureController = new TemperatureController_1.TemperatureController();
 const userController = new UserController_1.UserController();
-router.patch("/users", auth_1.jwtCheck, userController.editName);
+router.patch("/users", auth_1.jwtCheck, userController.updateUser);
+router.get("/users", auth_1.jwtCheck, userController.getUser);
 router.post("/temperatures", auth_1.jwtCheck, temperatureController.logTemperature);
 router.get("/temperatures", temperatureController.getTemperatures);
 router.use((req, res) => {
