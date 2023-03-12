@@ -10,7 +10,7 @@ const app = express();
 
 app.use(express.json());
 app.use(morgan("tiny") as express.RequestHandler);
-app.use(cors());
+//app.use(cors());
 
 // req.isAuthenticated is provided from the auth router
 app.get("/", (req: any, res) => {
