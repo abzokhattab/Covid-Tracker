@@ -3,9 +3,9 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import { updateUser } from '../Requests/updateUser';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { getUser } from '../Requests/getUser';
 import "../Profile.css"
+import '../Toastify.css';
 
 const DEFAULT_IMAGE_URL = 'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg'; // Add your default image URL here
 
@@ -61,7 +61,7 @@ const UserProfile = ({ onClose }) => {
 
   return (showModal &&
     <Container className="side-form-container">
-      <ToastContainer className="toast-container"/>   
+    <ToastContainer className="Toastify__toast-container"/>   
       <Row className="side-form">
         <Col>
        {user.email !== "" && <img class="circular--square" src={user.picture ? user.picture:DEFAULT_IMAGE_URL} alt={user.name} /> 

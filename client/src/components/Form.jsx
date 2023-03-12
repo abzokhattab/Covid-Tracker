@@ -3,7 +3,7 @@ import '../Form.css'; // Import CSS file for styling
 import { logTemperature } from '../Requests/logTemperature';
 import { useAuth0 } from '@auth0/auth0-react';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import '../Toastify.css';
 
 const Form = ({onClose}) => {
   const { getAccessTokenSilently } = useAuth0();
@@ -65,7 +65,7 @@ const Form = ({onClose}) => {
           </div>
         </div>
       )}
-    <ToastContainer className="toast-container"/>   
+    <ToastContainer className="Toastify__toast-container"/>   
      </>
   );
 };
